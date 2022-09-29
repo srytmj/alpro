@@ -2,7 +2,14 @@
 # 6703220051
 # suryatmaja@student.telkomuniversity.ac.id
 
+from ast import Pass
 import os
+import pandas as pd
+import getpass
+import pytz
+from datetime import datetime
+from tabulate import tabulate
+
 
 def sysclear():
     os.system('clear')
@@ -15,9 +22,10 @@ def sysclear():
     |_|  |_|_|\_\___|\__|
     """)
 
+date = ["test"]
 tdewasa = [100]
 tanak = [100]
-pw = "kepo"
+pw = "adadeh"
 
 def count(x,y,z):
     ax = x * 20000
@@ -46,6 +54,7 @@ Uang pembayaran = {z}
         if ans == 'y' :
             tdewasa.append(x)
             tanak.append(y)
+            date.append(str(datetime.now(pytz.timezone('Etc/GMT+8')).strftime("%m/%d/%Y %H:%M:%S")))
             buy()
         else: 
             main()
@@ -78,19 +87,31 @@ def menu(x):
             count(x,y,z)
 
         elif x == "2":
-            pasw = input("Masukan kata sandi")
-            if pasw != pw :
+            sysclear()
+            pasw = getpass.getpass('?')
+            
+            if pasw.lower() == pw:
                 sysclear()
-                input(f"{pasw}, really? did you just input this things into my program?")
-                main()
 
-            else:
-                sysclear()
+                d = {'Tanggal Jual': date, 'Tiket Dewasa': tdewasa, 'Tiket Anak-anak': tanak}
+                pdtabulate = lambda df: tabulate(df, headers='keys', tablefmt='pretty', showindex=False)
+                df = pdtabulate(d)
+
                 print(f"""
+{df}
+- - - - - - - - - - - - - - - - - - - - - - - - -
 Jumlah penipuan jual beli tiket hari ini 
 dewasa : {sum(tdewasa)} tiket
 anak-anak : {sum(tanak)} tiket
+- - - - - - - - - - - - - - - - - - - - - - - - -
+Total untung : Rp.{(sum(tdewasa) * 20000) + (sum(tanak) * 5000)}
                 """)
+                input()
+                main()
+            else:
+                sysclear()
+                input(f"{pasw}, really? did you just input this things into my program?")
+                main()
         
         elif x == "0":
             quit()
@@ -98,6 +119,8 @@ anak-anak : {sum(tanak)} tiket
         else :
             sysclear()
             print("Input anda diluar nalar")
+            input()
+            main()
 
     except Exception as error:
         sysclear()
