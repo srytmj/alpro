@@ -10,7 +10,6 @@ import pytz
 from datetime import datetime
 from tabulate import tabulate
 
-
 def sysclear():
     os.system('clear')
     print("""
@@ -27,6 +26,7 @@ tdewasa = [100]
 tanak = [100]
 pw = "adadeh"
 
+
 def count(x,y,z):
     ax = x * 20000
     ay = y * 5000
@@ -37,6 +37,7 @@ def count(x,y,z):
         sysclear()
         input("Maaf Uang anda tidak mencukupi yang tandanya kamu sangant miskin, tekan Enter untuk kembali")
         main()
+        
     else:
         sysclear()
         print(f"""
@@ -51,15 +52,18 @@ Uang pembayaran = {z}
             print(f"Kembali = {az}")
         
         ans = input("Apakah pesanan sudah benar? [ y / n ]\nInput : ")
+        
         if ans == 'y' :
             tdewasa.append(x)
             tanak.append(y)
             date.append(str(datetime.now(pytz.timezone('Etc/GMT+8')).strftime("%m/%d/%Y %H:%M:%S")))
             buy()
+            
         else: 
             main()
 
         return
+        
         
 def buy():
     sysclear()
@@ -71,6 +75,7 @@ def buy():
     else :
         quit()
 
+        
 def menu(x):
     try:
         if x == '1':
@@ -108,6 +113,7 @@ Total untung : Rp.{(sum(tdewasa) * 20000) + (sum(tanak) * 5000)}
                 """)
                 input()
                 main()
+                
             else:
                 sysclear()
                 input(f"{pasw}, really? did you just input this things into my program?")
@@ -129,7 +135,6 @@ Total untung : Rp.{(sum(tdewasa) * 20000) + (sum(tanak) * 5000)}
         main()
 
 
-
 def main():
     sysclear()
     print("""
@@ -140,10 +145,9 @@ def main():
     2. Menu Admin
 
 
-    0. Tutup Aplikasi
+    0. Tutup Program
     """)
-    x = input("Masukan Nilai Input : ")
-    menu(x)
+    menu(input("Masukan Nilai Input : "))
 
 if __name__ == "__main__":
     main()
