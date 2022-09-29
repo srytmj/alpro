@@ -1,6 +1,5 @@
-# Bakti Surya Atmaja
+# B Surya Atmaja
 # 6703220051
-# baktisurya.at@gmail.com
 # suryatmaja@student.telkomuniversity.ac.id
 
 import os
