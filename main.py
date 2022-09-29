@@ -1,6 +1,6 @@
 import os
 
-def clear():
+def sysclear():
     os.system('clear')
     print("""
   _______ _ _        _   
@@ -13,6 +13,7 @@ def clear():
 
 tdewasa = [100]
 tanak = [100]
+pw = "kepo"
 
 def count(x,y,z):
     ax = x * 20000
@@ -21,11 +22,11 @@ def count(x,y,z):
     az = z - xy
 
     if z < xy :
-        clear()
+        sysclear()
         input("Maaf Uang anda tidak mencukupi yang tandanya kamu sangant miskin, tekan Enter untuk kembali")
         main()
     else:
-        clear()
+        sysclear()
         print(f"""
 Jumlah tiket yang akan dibeli : 
 {x}x Dewasa = {ax}
@@ -36,52 +37,84 @@ Uang pembayaran = {z}
         """)
         if not az == 0:
             print(f"Kembali = {az}")
+
         count.ans = input("Apakah pesanan sudah benar? [ y / n ]\nInput : ")
         return
 
 def menu(x):
-    if x == '1':
-        clear()
-        print("""
-Daftar harga tiket
-    1x Dewasa = Rp. 20.000
-    1x Anak-anak = Rp. 5.000
-        """)
-        x = int(input("Berapa Tiket Dewasa Yang akan dibeli \nInput : "))
-        y = int(input("Berapa Tiket anak-anak Yang akan dibeli \nInput : "))
-        z = int(input("Masukan jumlah nominal uang anda \nInput : "))
+    try:
+        if x == '1':
+            sysclear()
+            print("""
+    Daftar harga tiket
+        1x Dewasa = Rp. 20.000
+        1x Anak-anak = Rp. 5.000
+            """)
+            x = int(input("Berapa Tiket Dewasa Yang akan dibeli \nInput : "))
+            y = int(input("Berapa Tiket anak-anak Yang akan dibeli \nInput : "))
+            z = int(input("Masukan jumlah nominal uang anda \nInput : "))
 
-        count(x,y,z)
+            count(x,y,z)
 
-        if count.ans == "y" :
-            clear()
-            print("terimakasih sudah membeli tiket kami yang tidak jelas tiket apa")
-            tdewasa.append(x)
-            tanak.append(y)
-            print(f"""
+            if count.ans == 'y' :
+                sysclear()
+                print("terimakasih sudah membeli tiket kami yang tidak jelas tiket apa")
+                
+                tdewasa.append(x)
+                tanak.append(y)
+
+                a = input("Ingin kembali ke menu utama? [ y / n ]\nInput : ")
+                if a == 'y':
+                    main()
+                else :
+                    quit()
+            # elif ans == "n" :
+            #     main()
+            else: 
+                main()
+
+        elif x == "2":
+            pasw = input("Masukan kata sandi")
+            if pasw != pw :
+                sysclear()
+                input(f"{pasw}, really? did you just input this things into my program?")
+                main()
+
+            else:
+                sysclear()
+                print(f"""
 Jumlah penipuan jual beli tiket hari ini 
 dewasa : {sum(tdewasa)} tiket
-anak-anak : {sum(tanak)} tiket""")
-        # elif ans == "n" :
-        #     main()
-        else: 
-            main()
+anak-anak : {sum(tanak)} tiket
+                """)
+        
+        elif x == "0":
+            quit()
 
-    elif x == "2":
-        print("letter is Suzuki")
-    
-    elif x == "3":
-        print("fruit is Yamaha")
+        else :
+            sysclear()
+            print("Input anda diluar nalar")
+
+    except Exception as error:
+        sysclear()
+        print('Error: ' + repr(error))
+        input("TLDR Input anda diluar nalar yang menjadikan program error \ntekan Enter untuk kembali ke menu utama....")
+        main()
+
+
 
 def main():
     if __name__ == "__main__":
-        clear()
+        sysclear()
         print("""
     hello selamat welkom
     pilih menu anda
     --------------------
     1. Pesan tiket
     2. Menu Admin
+
+
+    0. Tutup Aplikasi
         """)
         x = input("Masukan Nilai Input : ")
         menu(x)
