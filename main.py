@@ -37,9 +37,26 @@ Uang pembayaran = {z}
         """)
         if not az == 0:
             print(f"Kembali = {az}")
+        
+        ans = input("Apakah pesanan sudah benar? [ y / n ]\nInput : ")
+        if ans == 'y' :
+            tdewasa.append(x)
+            tanak.append(y)
+            buy()
+        else: 
+            main()
 
-        count.ans = input("Apakah pesanan sudah benar? [ y / n ]\nInput : ")
         return
+        
+def buy():
+    sysclear()
+    print("terimakasih sudah membeli tiket kami yang tidak jelas tiket apa")
+    
+    a = input("Ingin kembali ke menu utama? [ y / n ]\nInput : ")
+    if a == 'y':
+        main()
+    else :
+        quit()
 
 def menu(x):
     try:
@@ -55,23 +72,6 @@ def menu(x):
             z = int(input("Masukan jumlah nominal uang anda \nInput : "))
 
             count(x,y,z)
-
-            if count.ans == 'y' :
-                sysclear()
-                print("terimakasih sudah membeli tiket kami yang tidak jelas tiket apa")
-                
-                tdewasa.append(x)
-                tanak.append(y)
-
-                a = input("Ingin kembali ke menu utama? [ y / n ]\nInput : ")
-                if a == 'y':
-                    main()
-                else :
-                    quit()
-            # elif ans == "n" :
-            #     main()
-            else: 
-                main()
 
         elif x == "2":
             pasw = input("Masukan kata sandi")
@@ -104,9 +104,8 @@ anak-anak : {sum(tanak)} tiket
 
 
 def main():
-    if __name__ == "__main__":
-        sysclear()
-        print("""
+    sysclear()
+    print("""
     hello selamat welkom
     pilih menu anda
     --------------------
@@ -115,8 +114,9 @@ def main():
 
 
     0. Tutup Aplikasi
-        """)
-        x = input("Masukan Nilai Input : ")
-        menu(x)
+    """)
+    x = input("Masukan Nilai Input : ")
+    menu(x)
 
-main()
+if __name__ == "__main__":
+    main()
