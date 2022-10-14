@@ -1,7 +1,3 @@
-# B Surya Atmaja
-# 6703220051
-# suryatmaja@student.telkomuniversity.ac.id
-
 from ast import Pass
 import os
 import pandas as pd
@@ -9,6 +5,10 @@ import getpass
 import pytz
 from datetime import datetime
 from tabulate import tabulate
+
+# B Surya Atmaja
+# 6703220051
+# suryatmaja@student.telkomuniversity.ac.id
 
 def sysclear():
     os.system('clear')
@@ -26,12 +26,15 @@ tdewasa = [100]
 tanak = [100]
 pw = "adadeh"
 
-
 def count(x,y,z):
+    
     ax = x * 20000
     ay = y * 5000
     xy = ax + ay
     az = z - xy
+
+    if y == 2:        # discount 20% if buy 2 children ticket, simple
+        ay = ay / 0.2
 
     if z < xy :
         sysclear()
