@@ -1,0 +1,10 @@
+{
+    "transaction":[
+    {
+        "date": "2022-11-03",
+        "name":"John",
+        "weight": "15",
+        "income": 150000
+    }
+    ]
+}

@@ -1,0 +1,12 @@
+{
+    "information":
+    [{
+        "author": "Surya Atmaja",
+        "version": "0.0.1"
+    }],
+
+    "settings":
+    [{
+        "perkilos": 1500
+    }]
+}
