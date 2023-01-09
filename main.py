@@ -1,156 +1,75 @@
-from ast import Pass
-import os
-import pandas as pd
-import getpass
-import pytz
-from datetime import datetime
-from tabulate import tabulate
+makanan_data = ["Bakso", "Mie Yamin"]
+makanan_harga = [9000, 8000]
 
-# B Surya Atmaja
-# 6703220051
-# suryatmaja@student.telkomuniversity.ac.id
+minuman_data = ["Es Jeruh", "Es Teh"]
+minuman_harga = [3000, 2000]
 
-def sysclear():
-    os.system('clear')
-    print("""
-  _______ _ _        _   
- |__   __(_) |      | |  
-    | |   _| | _____| |_ 
-    | |  | | |/ / _ \ __|
-    | |  | |   <  __/ |_ 
-    |_|  |_|_|\_\___|\__|
-    """)
+pesan_makan = {}
+pesan_minum = {}
 
-date = ["test"]
-tdewasa = [100]
-tanak = [100]
-pw = "adadeh"
-
-def count(x,y,z):
-    
-    ax = x * 20000
-    ay = y * 5000
-    xy = ax + ay
-    az = z - xy
-
-    if y == 2:        # discount 20% if buy 2 children ticket, simple
-        ay = ay / 0.2
-
-    if z < xy :
-        sysclear()
-        input("Maaf Uang anda tidak mencukupi yang tandanya kamu sangant miskin, tekan Enter untuk kembali")
-        main()
-        
+def pesan(data, harga, pesan):
+    if data == makanan_data:
+        aa = "Makanan"
     else:
-        sysclear()
-        print(f"""
-Jumlah tiket yang akan dibeli : 
-{x}x Dewasa = {ax}
-{y}x Anak-anak = {ay}
-Total = {xy}
-=====================
-Uang pembayaran = {z}
-        """)
-        if not az == 0:
-            print(f"Kembali = {az}")
-        
-        ans = input("Apakah pesanan sudah benar? [ y / n ]\nInput : ")
-        
-        if ans == 'y' :
-            tdewasa.append(x)
-            tanak.append(y)
-            date.append(str(datetime.now(pytz.timezone('Etc/GMT+8')).strftime("%m/%d/%Y %H:%M:%S")))
-            buy()
-            
-        else: 
-            main()
+        aa = "Minuman"
 
-        return
-        
-        
-def buy():
-    sysclear()
-    print("terimakasih sudah membeli tiket kami yang tidak jelas tiket apa")
+    print(f"""=============================================\nMenu {aa}""")
+
+    for x, y, z in zip(range(0,len(data)), data, harga):
+        print(f"{x+1}. {y} - {z}")
+
+    if data == makanan_data:
+        w = "Porsi"
+    else:
+        w = "Gelas"
+
+    input_data = int(input("Pilih menu : "))
+    input_jumlah = int(input(f"{w} : "))
+    pesan[len(pesan)] = [data[input_data-1], input_jumlah, input_jumlah*harga[input_data-1]]
+
+def struk():
+    print("""============ Pembelian ============""")
+    total_beli = 0
+    for x in pesan_makan:
+        data = pesan_makan[x]
+
+        menu = data[0]
+        jumlah = data[1]
+        total_harga = data[2]
+        print(f"""{jumlah}x {menu} 
+        Rp.{total_harga}""")
+        total_beli += total_harga
+
+    print("\nTotal harus Dibayar: Rp",total_beli)
+    uang=int(input("Uang Tunai Pembeli: Rp "))
     
-    a = input("Ingin kembali ke menu utama? [ y / n ]\nInput : ")
-    if a == 'y':
-        main()
-    else :
+    if uang < total_beli:
+        print("Maaf uang anda tidak cukup")
         quit()
-
         
-def menu(x):
-    try:
-        if x == '1':
-            sysclear()
-            print("""
-    Daftar harga tiket
-        1x Dewasa = Rp. 20.000
-        1x Anak-anak = Rp. 5.000
-            """)
-            x = int(input("Berapa Tiket Dewasa Yang akan dibeli \nInput : "))
-            y = int(input("Berapa Tiket anak-anak Yang akan dibeli \nInput : "))
-            z = int(input("Masukan jumlah nominal uang anda \nInput : "))
+    kembalian=int(uang-total_beli)
+    print("Kembalian :",kembalian)
 
-            count(x,y,z)
 
-        elif x == "2":
-            sysclear()
-            pasw = getpass.getpass('?')
-            
-            if pasw.lower() == pw:
-                sysclear()
-
-                d = {'Tanggal Jual': date, 'Tiket Dewasa': tdewasa, 'Tiket Anak-anak': tanak}
-                pdtabulate = lambda df: tabulate(df, headers='keys', tablefmt='pretty', showindex=False)
-                df = pdtabulate(d)
-
-                print(f"""
-{df}
-- - - - - - - - - - - - - - - - - - - - - - - - -
-Jumlah penipuan jual beli tiket hari ini 
-dewasa : {sum(tdewasa)} tiket
-anak-anak : {sum(tanak)} tiket
-- - - - - - - - - - - - - - - - - - - - - - - - -
-Total untung : Rp.{(sum(tdewasa) * 20000) + (sum(tanak) * 5000)}
-                """)
-                input()
-                main()
-                
-            else:
-                sysclear()
-                input(f"{pasw}, really? did you just input this things into my program?")
-                main()
-        
-        elif x == "0":
-            quit()
-
-        else :
-            sysclear()
-            print("Input anda diluar nalar")
-            input()
-            main()
-
-    except Exception as error:
-        sysclear()
-        print('Error: ' + repr(error))
-        input("TLDR Input anda diluar nalar yang menjadikan program error \ntekan Enter untuk kembali ke menu utama....")
+def end():
+    choice = input("Ingin pesan kembali? [y/n]\n").lower()
+    if choice == "y":
         main()
 
+    else:
+        struk()
 
 def main():
-    sysclear()
-    print("""
-    hello selamat welkom
-    pilih menu anda
-    --------------------
-    1. Pesan tiket
-    2. Menu Admin
+    menu = int(input("""====== Selamat datang di Resto Apadaya ======
+1. Pesan Makan
+2. Pesan Minum\nInput = """))
 
+    if menu == 1:
+        pesan(makanan_data, makanan_harga, pesan_makan)
+        end()   
+        
+    if menu == 2:
+        pesan(minuman_data, minuman_harga, pesan_minum)
+        end()
 
-    0. Tutup Program
-    """)
-    menu(input("Masukan Nilai Input : "))
-
-if __name__ == "__main__":
-    main()
+main()
