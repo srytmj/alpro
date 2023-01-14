@@ -1,156 +1,127 @@
-from ast import Pass
-import os
-import pandas as pd
-import getpass
-import pytz
-from datetime import datetime
-from tabulate import tabulate
+#import func
+import datetime
 
-# B Surya Atmaja
-# 6703220051
-# suryatmaja@student.telkomuniversity.ac.id
+waktu = datetime.datetime.utcnow()+datetime.timedelta(hours=7)
 
-def sysclear():
-    os.system('clear')
-    print("""
-  _______ _ _        _   
- |__   __(_) |      | |  
-    | |   _| | _____| |_ 
-    | |  | | |/ / _ \ __|
-    | |  | |   <  __/ |_ 
-    |_|  |_|_|\_\___|\__|
-    """)
+hari=int(waktu.strftime("%d"))
+bulan=(waktu.strftime("%m"))
+tahun=(waktu.strftime("%y"))
 
-date = ["test"]
-tdewasa = [100]
-tanak = [100]
-pw = "adadeh"
+print(f'tanggal: {hari}/{bulan}/{tahun}')
+print(waktu)
 
-def count(x,y,z):
+kuota_biasa = [0,0,0]
+
+#menu paket kuota (dika)
+
+def input_kuota(kuota, hari, harga):
+    print(f"Kuota yang anda pilih: {kuota}GB - {hari} Hari -Rp. {harga}")
+    pilihan = input('Konfimasi pembelian (y/n) :').lower()
     
-    ax = x * 20000
-    ay = y * 5000
-    xy = ax + ay
-    az = z - xy
+    if (pilihan=='y'):
+        print('SELAMAT,paket anda telah di tambahkan')
+        print('Mengembalikan anda ke menu awal')
+        kuota_biasa.clear()
+        # 
+        kuota_biasa.append(kuota)
+        kuota_biasa.append(hari)
+        kuota_biasa.append(harga)
 
-    if y == 2:        # discount 20% if buy 2 children ticket, simple
-        ay = ay / 0.2
-
-    if z < xy :
-        sysclear()
-        input("Maaf Uang anda tidak mencukupi yang tandanya kamu sangant miskin, tekan Enter untuk kembali")
-        main()
-        
     else:
-        sysclear()
-        print(f"""
-Jumlah tiket yang akan dibeli : 
-{x}x Dewasa = {ax}
-{y}x Anak-anak = {ay}
-Total = {xy}
-=====================
-Uang pembayaran = {z}
-        """)
-        if not az == 0:
-            print(f"Kembali = {az}")
-        
-        ans = input("Apakah pesanan sudah benar? [ y / n ]\nInput : ")
-        
-        if ans == 'y' :
-            tdewasa.append(x)
-            tanak.append(y)
-            date.append(str(datetime.now(pytz.timezone('Etc/GMT+8')).strftime("%m/%d/%Y %H:%M:%S")))
-            buy()
-            
-        else: 
-            main()
+        print("pembelian digagalkan, kembali ke menu utama")
+        return 0, 0, 0
 
-        return
-        
-        
-def buy():
-    sysclear()
-    print("terimakasih sudah membeli tiket kami yang tidak jelas tiket apa")
+
+def beli_kuota():
+    kuota1 = '42Gb 30hr 100rb'
+    kuota2 = '30Gb 15hr 75rb'
+    kuota3 = '25Gb 30hr 25rb(spesial)'
+    kuota4 = '117Gb 30hr 117rb'
+
+    print(f"""
+        1.{kuota1}
+        2.{kuota2}
+        3.{kuota3}
+        4.{kuota4}
+        0. Kembali
+         """)
+    paket = int(input("pilih paket :"))
     
-    a = input("Ingin kembali ke menu utama? [ y / n ]\nInput : ")
-    if a == 'y':
-        main()
-    else :
+    if (paket==1):
+        paket = [42, 30, 100000]
+        print(f'apakah anda yakin membeli paket {kuota1}?')
+        input_kuota(paket[0], paket[1], paket[2])   
+
+    elif (paket==2):
+        paket = [30, 15, 75000]
+        print(f'apakah anda yakin membeli paket {kuota2}?')
+
+        input_kuota(paket[0], paket[1], paket[2])
+        
+    elif (paket==3):
+        paket = [25, 30, 25000]
+        print(f'apakah anda yakin membeli paket {kuota3}?')
+
+        input_kuota(paket[0], paket[1], paket[2])
+        
+    elif (paket==4):
+        paket = [117, 30, 117000]
+        print(f'apakah anda yakin membeli paket {kuota4}?')
+
+        input_kuota(paket[0], paket[1], paket[2])
+
+
+#menu custom kuota
+def custom_kuota():
+    kuota_custom=int(input("pilih jumlah Gigabyte kuota (2000/Gb): "))
+    masa_aktif=int(input("pilih masa aktif (1000/Hari): "))
+    harga= ((kuota_custom*2000)+(masa_aktif*1000))
+    print(f'Beli kuota sebesar {kuota_custom}Gb dengan masa aktif {masa_aktif}hr, total pembayaran sebesar : {harga}?')
+    konfirmasi=input("1.Beli\n2.menu\n pilih opsi: ")
+    if (konfirmasi=='1'):
+        print(f'selamat pembelian kuota anda sebesar {kuota_custom} Gigabyte dengan masa aktif {masa_aktif} hari berhasil!')
+        print("mengembalikan ke menu")
+        return kuota_custom, masa_aktif
+        
+    elif (konfirmasi=='2'):
+        custom_kuota()
+    else:
+        print("input tidak ditemukan, mengalihkan anda ke menu awal")
+        
+    
+#menu ekstensi masa aktif(reni/manda)
+def cek_masa_aktif():
+    masa_aktif=0
+    hari_tambah= int(input("tambah brp hari?"))
+    masa_aktif+hari_tambah
+    
+#cek kuota aktif
+# def cek_kuota_aktif():
+
+#     x = beli_kuota
+#     kuota_paket,masa_paket= input_kuota(x)
+#     print (f"Sisa kuota anda adalah {kuota_paket} | dengan masa berlaku {masa_paket} hari (aktif sampai dengan )")
+
+
+#main page(beli paket kuota, beli custom kuota, ekstensi masa aktif, cek kuota aktif, keluar)
+def mainpage():
+
+    print ("---------------------------\n 1.Beli paket kuota\n 2.Beli custom kuota\n 3.Ekstensi masa aktif\n 4.Cek kuota aktif\n 5.Keluar\n ---------------------------")
+    menu = int(input("pilih menu :"))
+    if (menu==1):
+        beli_kuota()
+
+    elif (menu==2):
+        custom_kuota()
+    elif (menu==3):
+        cek_masa_aktif()
+    elif (menu==4):
+        print(f"{kuota_biasa[0]}GB - {kuota_biasa[1]}Hari -Rp. {kuota_biasa[2]}")
+    elif (menu==5):
         quit()
-
-        
-def menu(x):
-    try:
-        if x == '1':
-            sysclear()
-            print("""
-    Daftar harga tiket
-        1x Dewasa = Rp. 20.000
-        1x Anak-anak = Rp. 5.000
-            """)
-            x = int(input("Berapa Tiket Dewasa Yang akan dibeli \nInput : "))
-            y = int(input("Berapa Tiket anak-anak Yang akan dibeli \nInput : "))
-            z = int(input("Masukan jumlah nominal uang anda \nInput : "))
-
-            count(x,y,z)
-
-        elif x == "2":
-            sysclear()
-            pasw = getpass.getpass('?')
-            
-            if pasw.lower() == pw:
-                sysclear()
-
-                d = {'Tanggal Jual': date, 'Tiket Dewasa': tdewasa, 'Tiket Anak-anak': tanak}
-                pdtabulate = lambda df: tabulate(df, headers='keys', tablefmt='pretty', showindex=False)
-                df = pdtabulate(d)
-
-                print(f"""
-{df}
-- - - - - - - - - - - - - - - - - - - - - - - - -
-Jumlah penipuan jual beli tiket hari ini 
-dewasa : {sum(tdewasa)} tiket
-anak-anak : {sum(tanak)} tiket
-- - - - - - - - - - - - - - - - - - - - - - - - -
-Total untung : Rp.{(sum(tdewasa) * 20000) + (sum(tanak) * 5000)}
-                """)
-                input()
-                main()
-                
-            else:
-                sysclear()
-                input(f"{pasw}, really? did you just input this things into my program?")
-                main()
-        
-        elif x == "0":
-            quit()
-
-        else :
-            sysclear()
-            print("Input anda diluar nalar")
-            input()
-            main()
-
-    except Exception as error:
-        sysclear()
-        print('Error: ' + repr(error))
-        input("TLDR Input anda diluar nalar yang menjadikan program error \ntekan Enter untuk kembali ke menu utama....")
-        main()
+    else:
+        print ("error")
 
 
-def main():
-    sysclear()
-    print("""
-    hello selamat welkom
-    pilih menu anda
-    --------------------
-    1. Pesan tiket
-    2. Menu Admin
-
-
-    0. Tutup Program
-    """)
-    menu(input("Masukan Nilai Input : "))
-
-if __name__ == "__main__":
-    main()
+while True:
+    mainpage()
